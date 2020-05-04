@@ -988,11 +988,6 @@ void UBBoardView::mousePressEvent (QMouseEvent *event)
 
     mIsDragInProgress = false;
 
-    if (isAbsurdPoint (event->pos ())) {
-        event->accept ();
-        return;
-    }
-
     mMouseDownPos = event->pos ();
     setMovingItem(scene()->itemAt(this->mapToScene(event->localPos().toPoint()), QTransform()));
 
@@ -1112,11 +1107,6 @@ void UBBoardView::mouseMoveEvent (QMouseEvent *event)
     mIsDragInProgress = true;
     mWidgetMoved = true;
     mLongPressTimer.stop();
-
-    if (isAbsurdPoint (event->pos ())) {
-        event->accept ();
-        return;
-    }
 
     if ((UBDrawingController::drawingController()->isDrawingTool()) && !mMouseButtonIsPressed)
         QGraphicsView::mouseMoveEvent(event);
@@ -1700,23 +1690,6 @@ void UBBoardView::virtualKeyboardActivated(bool b)
     UBPlatformUtils::setWindowNonActivableFlag(this, b);
     mVirtualKeyboardActive = b;
     setInteractive(!b);
-}
-
-
-// Apple remote desktop sends funny events when the transmission is bad
-
-bool UBBoardView::isAbsurdPoint(QPoint point)
-{
-    QDesktopWidget *desktop = qApp->desktop ();
-    bool isValidPoint = false;
-
-    for (int i = 0; i < desktop->numScreens (); i++)
-    {
-        QRect screenRect = desktop->screenGeometry (i);
-        isValidPoint = isValidPoint || screenRect.contains (mapToGlobal(point));
-    }
-
-    return !isValidPoint;
 }
 
 void UBBoardView::focusOutEvent (QFocusEvent * event)
