@@ -337,8 +337,9 @@ UBGraphicsScene::UBGraphicsScene(UBDocumentProxy* parent, bool enableUndoRedoSta
     , magniferDisplayViewWidget(0)
     , mZLayerController(new UBZLayerController(this))
     , mpLastPolygon(NULL)
-    , mCurrentPolygon(0)
     , mTempPolygon(NULL)
+    , mDrawWithCompass(false)
+    , mCurrentPolygon(0)
     , mSelectionFrame(0)
 {
     UBCoreGraphicsScene::setObjectName("BoardScene");
@@ -1052,7 +1053,9 @@ void UBGraphicsScene::eraseLineTo(const QPointF &pEndPoint, const qreal &pWidth)
                 polygonItem->setNominalLine(false);
                 polygonItem->setStroke(intersectedPolygonItem->stroke());
                 polygonItem->setStrokesGroup(intersectedPolygonItem->strokesGroup());
-                intersectedPolygonItem->strokesGroup()->addToGroup(polygonItem);
+                auto stuff = intersectedPolygonItem->strokesGroup();
+                assert(stuff);
+                stuff->addToGroup(polygonItem);
                 mAddedItems << polygonItem;
             }
         }
