@@ -1,3 +1,6 @@
+QMAKE_CXX=clang++
+QMAKE_LINK=clang++
+
 TARGET = "OpenBoard"
 TEMPLATE = app
 
@@ -7,7 +10,9 @@ CONFIG += c++14
 CONFIG -= flat
 CONFIG += debug_and_release \
           no_include_pwd
-
+# CONFIG += sanitizer sanitize_address
+# CONFIG += sanitizer sanitize_memory
+# CONFIG += sanitizer sanitize_undefined
 
 VERSION_MAJ = 1
 VERSION_MIN = 6
