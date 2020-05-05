@@ -82,7 +82,7 @@ UBPodcastController::UBPodcastController(QObject* pParent)
     , mVideoEncoder(0)
     , mIsGrabbing(false)
     , mInitialized(false)
-    , mVideoFramesPerSecondAtStart(10)
+    , mVideoFramesPerSecondAtStart(30)
     , mVideoFrameSizeAtStart(1024, 768)
     , mVideoBitsPerSecondAtStart(1700000)
     , mSourceWidget(0)
@@ -429,6 +429,7 @@ void UBPodcastController::unpause()
 {
     if (mVideoEncoder && mRecordingState == Paused && mVideoEncoder->canPause())
     {
+        puts("pausing");
         if (mVideoEncoder->unpause())
         {
              mRecordingTimestampOffset += mTimeAtPaused.msecsTo(QTime::currentTime());
@@ -444,6 +445,7 @@ void UBPodcastController::stop()
 {
     if ((mRecordingState == Recording || mRecordingState == Paused) && mVideoEncoder)
     {
+        puts("stopping");
         if (mScreenGrabingTimerEventID != 0)
         {
             killTimer(mScreenGrabingTimerEventID);
@@ -457,6 +459,7 @@ void UBPodcastController::stop()
 
         setRecordingState(Stopping);
 
+        puts("calling stop");
         mVideoEncoder->stop();
     }
 }
