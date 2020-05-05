@@ -169,14 +169,14 @@ void UBApplicationController::screenLayoutChanged()
 
     adjustDisplayView();
 
-    if (mDisplayManager->hasDisplay())
-    {
-        UBApplication::boardController->setBoxing(mDisplayView->geometry());
-    }
-    else
-    {
+    // if (mDisplayManager->hasDisplay())
+    // {
+    //     UBApplication::boardController->setBoxing(mDisplayView->geometry());
+    // }
+    // else
+    // {
        UBApplication::boardController->setBoxing(QRect());
-    }
+    // }
 
     adjustPreviousViews(0, 0);
 }
